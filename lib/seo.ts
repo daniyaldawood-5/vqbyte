@@ -1,0 +1,5 @@
+import type { Metadata } from "next"; import type { PageContent } from "@/content/types";
+export const siteUrl=process.env.NEXT_PUBLIC_SITE_URL??"http://localhost:3000";
+export function pageMetadata(page:PageContent):Metadata{return {title:page.metaTitle,description:page.metaDescription,alternates:{canonical:page.slug},openGraph:{title:`${page.metaTitle} | VQBYTE`,description:page.metaDescription,url:page.slug,type:"website"}}}
+export function breadcrumbSchema(items:{name:string;url:string}[]){return {"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:items.map((item,index)=>({"@type":"ListItem",position:index+1,name:item.name,item:new URL(item.url,siteUrl).toString()}))}}
+export function entitySchema(page:PageContent,type:"SoftwareApplication"|"Service"|"Article"|"WebPage"="WebPage"){const base={"@context":"https://schema.org","@type":type,name:page.label,description:page.metaDescription,url:new URL(page.slug,siteUrl).toString()};return type==="SoftwareApplication"?{...base,applicationCategory:"BusinessApplication",operatingSystem:"Web"}:base}

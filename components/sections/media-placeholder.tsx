@@ -1,0 +1,2 @@
+import { MonitorUp } from "lucide-react";
+export function MediaPlaceholder({label,detail}:{label:string;detail:string}){if(process.env.NODE_ENV==="production")return <div className="media-production"><MonitorUp aria-hidden="true"/><div><strong>{label}</strong><p>Available in a guided product demonstration.</p></div></div>;return <div className="media-placeholder" role="img" aria-label={`${label}: development placeholder`}><span>Development asset placeholder</span><MonitorUp aria-hidden="true"/><strong>{label}</strong><p>{detail}</p></div>}

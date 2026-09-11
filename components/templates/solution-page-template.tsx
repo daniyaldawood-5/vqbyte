@@ -1,0 +1,1 @@
+import type{PageContent}from"@/content/types";import{ContentPageTemplate}from"./content-page-template";export function SolutionPageTemplate({page}:{page:PageContent}){return <ContentPageTemplate page={page} kind="solution"/>}

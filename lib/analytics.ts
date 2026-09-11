@@ -1,0 +1,2 @@
+export type AnalyticsEvent="product_view"|"workflow_expand"|"screenshot_open"|"case_study_view"|"demo_cta_click"|"demo_form_start"|"demo_form_submit"|"guide_download"|"integration_request";
+export function track(event:AnalyticsEvent,detail:Record<string,string>={}){if(typeof window==="undefined"||localStorage.getItem("vqbyte-analytics-consent")!=="granted")return;window.dispatchEvent(new CustomEvent("vqbyte:analytics",{detail:{event,...detail}}))}
