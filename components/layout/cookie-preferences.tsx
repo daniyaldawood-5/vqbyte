@@ -3,12 +3,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CONSENT_KEY, loadAnalytics, readConsent } from "@/lib/analytics";
 
-export function CookiePreferences() {
+export function CookiePreferences({ gaId }: { gaId: string }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const consent = readConsent();
-    if (consent === "granted") loadAnalytics();
+    if (consent === "granted") loadAnalytics(gaId);
     // Show the banner shortly after load so it never blocks first paint.
     const timer = consent ? undefined : window.setTimeout(() => setVisible(true), 600);
     const reopen = () => setVisible(true);
@@ -17,11 +17,11 @@ export function CookiePreferences() {
       window.clearTimeout(timer);
       window.removeEventListener("vqbyte:cookie-settings", reopen);
     };
-  }, []);
+  }, [gaId]);
 
   function choose(value: "granted" | "denied") {
     try { localStorage.setItem(CONSENT_KEY, value); } catch { /* storage unavailable */ }
-    if (value === "granted") loadAnalytics();
+    if (value === "granted") loadAnalytics(gaId);
     setVisible(false);
   }
 

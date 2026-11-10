@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Faq } from "@/content/types";
 import { site } from "@/content/site";
+import type { PublicSettings } from "@/lib/settings";
 
 export const siteUrl = site.url.replace(/\/$/, "");
 
@@ -78,7 +79,7 @@ export function serviceSchema(name: string, description: string, path: string, a
   };
 }
 
-export function organizationSchema() {
+export function organizationSchema(settings: PublicSettings) {
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -86,14 +87,14 @@ export function organizationSchema() {
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
         name: site.name,
-        legalName: site.legalName,
+        legalName: settings.legalName,
         url: siteUrl,
         logo: absoluteUrl("/brand/vqbyte-logo.svg"),
         description: site.description,
-        email: site.email,
-        ...(site.phone ? { telephone: site.phone } : {}),
-        ...(site.address ? { address: site.address } : {}),
-        ...(site.socials.length ? { sameAs: site.socials.map((s) => s.href) } : {}),
+        email: settings.email,
+        ...(settings.phone ? { telephone: settings.phone } : {}),
+        ...(settings.address ? { address: settings.address } : {}),
+        ...(settings.socials.length ? { sameAs: settings.socials.map((s) => s.href) } : {}),
         knowsAbout: [
           "ERP software",
           "CRM software",

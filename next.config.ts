@@ -38,12 +38,23 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  serverExternalPackages: ["mongodb"],
   images: { dangerouslyAllowSVG: true, contentDispositionType: "inline", unoptimized: true },
   async redirects() {
     return legacyRedirects.map(([source, destination]) => ({ source, destination, permanent: true }));
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      {
+        source: "/admin/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          { key: "Cache-Control", value: "no-store" },
+        ],
+      },
+      { source: "/admin", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }, { key: "Cache-Control", value: "no-store" }] },
+    ];
   },
 };
 

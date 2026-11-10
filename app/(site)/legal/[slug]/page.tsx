@@ -1,24 +1,26 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { legalPages } from "@/content/legal";
+import { getLegalPages, legalSlugs, type LegalSlug } from "@/content/legal";
+import { getPublicSettings } from "@/lib/settings";
 import { SiteBreadcrumbs } from "@/components/ui/site-breadcrumbs";
 import { buildMetadata } from "@/lib/seo";
 
-type Slug = keyof typeof legalPages;
+type Slug = LegalSlug;
+const pagesFor = async () => getLegalPages(await getPublicSettings());
 
 export function generateStaticParams() {
-  return Object.keys(legalPages).map((slug) => ({ slug }));
+  return legalSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const page = legalPages[slug as Slug];
+  const page = (await pagesFor())[slug as Slug];
   return page ? buildMetadata({ title: page.title, description: page.description, path: `/legal/${slug}` }) : {};
 }
 
 export default async function LegalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const page = legalPages[slug as Slug];
+  const page = (await pagesFor())[slug as Slug];
   if (!page) notFound();
   return (
     <main id="main">

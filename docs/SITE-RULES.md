@@ -50,9 +50,12 @@ Rules:
 
 ## 5. Launch checklist
 
-Run `npm run prelaunch` with production env vars set. It fails when:
-- `NEXT_PUBLIC_SITE_URL` is missing or points to localhost
-- no lead destination is configured (`LEAD_WEBHOOK_URL` or `RESEND_API_KEY` + `LEAD_TO_EMAIL`)
-- the contact email in `content/site.ts` is not confirmed (`NEXT_PUBLIC_CONTACT_EMAIL`)
+Run `npm run prelaunch` on the server. It fails when `NEXT_PUBLIC_SITE_URL` is missing/localhost or the admin login is not set, and warns when the default admin password or email delivery is not configured.
 
-Then: `npm run lint`, `npm run typecheck`, `npm run build`, and click through every page in the sitemap.
+Then: `npm run lint`, `npm run typecheck`, `npm run build`, sign in to `/admin`, set up email, submit a test enquiry and click through the sitemap.
+
+## 6. Admin panel rules
+
+- `/admin` is never linked from the site or listed in `robots.txt`; it sends `noindex` headers and meta tags.
+- Every admin page and server action calls `requireAdmin()`.
+- Secrets (Resend key, webhook token, MongoDB URL) are never sent back to the browser — only a masked hint.

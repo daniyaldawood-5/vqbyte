@@ -1,7 +1,6 @@
 export type AnalyticsEvent = "lead_form_start" | "lead_form_submit" | "cta_click" | "whatsapp_click";
 
 export const CONSENT_KEY = "vqbyte-analytics-consent";
-export const gaId = process.env.NEXT_PUBLIC_GA_ID ?? "";
 
 type Gtag = (...args: unknown[]) => void;
 declare global {
@@ -12,8 +11,8 @@ export function readConsent(): string | null {
   try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
 }
 
-/** Loads Google Analytics 4 only after consent and only when NEXT_PUBLIC_GA_ID is set. */
-export function loadAnalytics() {
+/** Loads Google Analytics 4 only after consent and only when a GA ID is set in the admin panel. */
+export function loadAnalytics(gaId: string) {
   if (typeof window === "undefined" || !gaId || window.gtag) return;
   const script = document.createElement("script");
   script.async = true;

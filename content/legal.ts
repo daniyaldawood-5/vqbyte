@@ -1,8 +1,13 @@
-import { site } from "./site";
+import { site as brand } from "./site";
 
 type LegalPage = { title: string; description: string; updated: string; sections: { title: string; body: string }[] };
 
-export const legalPages: Record<"privacy" | "terms" | "cookies", LegalPage> = {
+export const legalSlugs = ["privacy", "terms", "cookies"] as const;
+export type LegalSlug = (typeof legalSlugs)[number];
+
+export function getLegalPages(contact: { legalName: string; email: string }): Record<LegalSlug, LegalPage> {
+  const site = { ...brand, ...contact };
+  return {
   privacy: {
     title: "Privacy Policy",
     description: `How ${site.name} collects, uses and protects personal information submitted through this website.`,
@@ -97,3 +102,4 @@ export const legalPages: Record<"privacy" | "terms" | "cookies", LegalPage> = {
     ],
   },
 };
+}

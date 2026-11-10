@@ -1,82 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
-import { leadSchema, type Lead } from "@/lib/validation";
-import { site } from "@/content/site";
+import { leadSchema } from "@/lib/validation";
+import { getSettings } from "@/lib/settings";
+import { addLead, updateLead, type StoredLead } from "@/lib/leads";
+import { adminEmail, adminRecipients, customerEmail, emailReady, sendEmail } from "@/lib/mailer";
+
+export const dynamic = "force-dynamic";
 
 const attempts = new Map<string, { count: number; reset: number }>();
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
 
-const escapeHtml = (value: string) =>
-  value.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
-
-async function sendWebhook(lead: Lead) {
-  const url = process.env.LEAD_WEBHOOK_URL;
-  if (!url) return false;
-  const headers: Record<string, string> = { "content-type": "application/json" };
-  if (process.env.LEAD_WEBHOOK_TOKEN) headers.authorization = `Bearer ${process.env.LEAD_WEBHOOK_TOKEN}`;
-  const res = await fetch(url, { method: "POST", headers, body: JSON.stringify({ ...lead, receivedAt: new Date().toISOString() }) });
-  if (!res.ok) throw new Error(`Webhook returned ${res.status}`);
-  return true;
-}
-
-async function sendEmail(lead: Lead) {
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.LEAD_TO_EMAIL;
-  if (!key || !to) return false;
-  const from = process.env.LEAD_FROM_EMAIL ?? `${site.name} Website <onboarding@resend.dev>`;
-  const rows: [string, string][] = [
-    ["Name", lead.name],
-    ["Email", lead.email],
-    ["Company", lead.company],
-    ["Country", lead.country],
-    ["Interest", lead.interest],
-    ["Company size", lead.companySize],
-    ["Timeline", lead.timeline],
-    ["Contact method", lead.contactMethod],
-    ["Phone", lead.phone],
-    ["Page", lead.sourcePath],
-    ["Referrer", lead.referrer],
-  ];
-  const html = `<h2>New website enquiry</h2><table cellpadding="6">${rows
-    .filter(([, v]) => v)
-    .map(([k, v]) => `<tr><th align="left">${k}</th><td>${escapeHtml(v)}</td></tr>`)
-    .join("")}</table><h3>Message</h3><p style="white-space:pre-wrap">${escapeHtml(lead.message)}</p>`;
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
-    body: JSON.stringify({
-      from,
-      to: to.split(",").map((s) => s.trim()),
-      reply_to: lead.email,
-      subject: `New enquiry: ${lead.interest} — ${lead.company}`,
-      html,
-    }),
-  });
-  if (!res.ok) throw new Error(`Email provider returned ${res.status}`);
-  return true;
-}
+const outcome = (r: PromiseSettledResult<unknown>, skipped: boolean) =>
+  skipped ? "skipped" : r.status === "fulfilled" ? "sent" : `failed: ${String((r as PromiseRejectedResult).reason?.message ?? r.reason).slice(0, 160)}`;
 
 export async function POST(request: NextRequest) {
   const origin = request.headers.get("origin");
   const allowed = process.env.NEXT_PUBLIC_SITE_URL;
   if (allowed && origin) {
     try {
-      if (new URL(origin).origin !== new URL(allowed).origin) {
-        return NextResponse.json({ error: "Request origin was not accepted." }, { status: 403 });
-      }
+      if (new URL(origin).origin !== new URL(allowed).origin) throw new Error("origin");
     } catch {
       return NextResponse.json({ error: "Request origin was not accepted." }, { status: 403 });
     }
   }
 
-  const key =
-    request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
+  const ip =
+    request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const now = Date.now();
-  const record = attempts.get(key);
+  const record = attempts.get(ip);
   if (record && record.reset > now && record.count >= MAX_ATTEMPTS) {
     return NextResponse.json({ error: "Too many attempts. Please try again in a few minutes." }, { status: 429 });
   }
-  attempts.set(key, { count: record && record.reset > now ? record.count + 1 : 1, reset: record && record.reset > now ? record.reset : now + WINDOW_MS });
+  attempts.set(ip, {
+    count: record && record.reset > now ? record.count + 1 : 1,
+    reset: record && record.reset > now ? record.reset : now + WINDOW_MS,
+  });
 
   let raw: unknown;
   try {
@@ -88,29 +46,60 @@ export async function POST(request: NextRequest) {
   const parsed = leadSchema.safeParse(raw);
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
-    // Silently accept honeypot submissions so bots learn nothing.
+    // Quietly accept honeypot (bot) submissions without storing them.
     if (issue?.path[0] === "website") return NextResponse.json({ ok: true });
     return NextResponse.json({ error: issue?.message ?? "Please check the form and try again." }, { status: 422 });
   }
 
+  const settings = await getSettings();
+  let lead: StoredLead;
   try {
-    const results = await Promise.all([sendWebhook(parsed.data), sendEmail(parsed.data)]);
-    if (results.some(Boolean)) return NextResponse.json({ ok: true });
+    lead = await addLead(parsed.data, ip);
   } catch (error) {
-    console.error("Lead routing failed", error instanceof Error ? error.message : "unknown error");
-    return NextResponse.json(
-      { error: `Sorry, your message could not be sent. Please email us at ${site.email}.` },
-      { status: 502 },
-    );
+    console.error("Could not store lead", error instanceof Error ? error.message : error);
+    return NextResponse.json({ error: `Sorry, your message could not be sent. Please email us at ${settings.email}.` }, { status: 500 });
   }
 
-  if (process.env.NODE_ENV !== "production") {
-    console.info("Lead validated (no destination configured in development)", { interest: parsed.data.interest });
-    return NextResponse.json({ ok: true, mode: "development" });
-  }
-  console.error("No lead destination configured: set LEAD_WEBHOOK_URL or RESEND_API_KEY + LEAD_TO_EMAIL");
-  return NextResponse.json(
-    { error: `Our form is temporarily unavailable. Please email us at ${site.email}.` },
-    { status: 503 },
-  );
+  const canEmail = emailReady(settings);
+  const admins = adminRecipients(settings);
+  const admin = adminEmail(settings, lead);
+  const customer = customerEmail(settings, lead);
+
+  const [adminResult, replyResult, hookResult] = await Promise.allSettled([
+    canEmail && admins.length
+      ? sendEmail(settings, { to: admins, subject: admin.subject, html: admin.html, replyTo: lead.email })
+      : Promise.resolve(),
+    canEmail && settings.autoReplyEnabled
+      ? sendEmail(settings, {
+          to: [lead.email],
+          subject: customer.subject,
+          html: customer.html,
+          text: customer.text,
+          replyTo: admins[0] || settings.email,
+        })
+      : Promise.resolve(),
+    settings.webhookUrl
+      ? fetch(settings.webhookUrl, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            ...(settings.webhookToken ? { authorization: `Bearer ${settings.webhookToken}` } : {}),
+          },
+          body: JSON.stringify(lead),
+          signal: AbortSignal.timeout(10_000),
+        }).then((r) => {
+          if (!r.ok) throw new Error(`Webhook returned ${r.status}`);
+        })
+      : Promise.resolve(),
+  ]);
+
+  await updateLead(lead.id, {
+    delivery: {
+      adminEmail: outcome(adminResult, !canEmail || !admins.length),
+      autoReply: outcome(replyResult, !canEmail || !settings.autoReplyEnabled),
+      webhook: outcome(hookResult, !settings.webhookUrl),
+    },
+  }).catch(() => undefined);
+
+  return NextResponse.json({ ok: true });
 }

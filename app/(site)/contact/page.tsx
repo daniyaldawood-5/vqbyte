@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { LeadForm } from "@/components/forms/lead-form";
 import { SiteBreadcrumbs } from "@/components/ui/site-breadcrumbs";
-import { site, whatsappLink } from "@/content/site";
+import { getPublicSettings } from "@/lib/settings";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -13,7 +13,9 @@ export const metadata: Metadata = buildMetadata({
   path: "/contact",
 });
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const site = await getPublicSettings();
+  const whatsappLink = site.whatsappLink;
   return (
     <main id="main">
       <SiteBreadcrumbs items={[{ label: "Contact", href: "/contact" }]} />

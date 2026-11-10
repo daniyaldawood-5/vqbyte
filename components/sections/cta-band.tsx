@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { site } from "@/content/site";
+import { getPublicSettings } from "@/lib/settings";
 
-export function CtaBand({
+export async function CtaBand({
   title = "Let's talk about what your business needs",
   body = "Book a free 30-minute consultation. We'll listen, ask the right questions and suggest the fastest way to solve your problem — no obligation.",
   interest,
   href: hrefOverride,
 }: { title?: string; body?: string; interest?: string; href?: string }) {
+  const site = await getPublicSettings();
   const href = hrefOverride ?? (interest ? `/contact?interest=${interest}` : "/contact");
   return (
     <section className="cta-band">

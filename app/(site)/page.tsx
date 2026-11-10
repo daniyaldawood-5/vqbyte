@@ -16,6 +16,7 @@ import { HomeHero } from "@/components/home/hero";
 import { Marquee } from "@/components/home/marquee";
 import { DeliveryLoop } from "@/components/home/loop";
 import { CountUp } from "@/components/home/count-up";
+import { GlobalSection } from "@/components/home/global-section";
 
 export const metadata: Metadata = {
   ...buildMetadata({
@@ -170,6 +171,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <GlobalSection />
 
       <section className="section section-soft">
         <div className="container split split-reverse">

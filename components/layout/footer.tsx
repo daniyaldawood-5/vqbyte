@@ -3,10 +3,13 @@ import Link from "next/link";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { services } from "@/content/services";
 import { industries } from "@/content/industries";
-import { site, whatsappLink } from "@/content/site";
+import type { PublicSettings } from "@/lib/settings";
+import { site as brand } from "@/content/site";
 import { CookieSettingsLink } from "./cookie-preferences";
 
-export function Footer() {
+export function Footer({ settings }: { settings: PublicSettings }) {
+  const site = settings;
+  const whatsappLink = settings.whatsappLink;
   const groups = [
     { title: "Services", items: services.map((s) => ({ label: s.short, href: `/services/${s.slug}` })) },
     { title: "Industries", items: industries.map((i) => ({ label: i.short, href: `/industries/${i.slug}` })) },
@@ -25,7 +28,7 @@ export function Footer() {
       <div className="container footer-top">
         <div className="footer-brand">
           <Image src="/brand/vqbyte-logo.svg" alt="VQBYTE" width={150} height={50} className="footer-logo" />
-          <p>{site.description}</p>
+          <p>{brand.description}</p>
           <ul className="footer-contact">
             <li>
               <Mail size={16} aria-hidden="true" />

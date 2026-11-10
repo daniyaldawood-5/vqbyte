@@ -45,3 +45,6 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# admin panel data (settings, leads, login) — never commit
+/data/
