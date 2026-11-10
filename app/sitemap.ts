@@ -1,2 +1,31 @@
-import type{MetadataRoute}from"next";import{products}from"@/content/products";import{services}from"@/content/services";import{solutions}from"@/content/solutions";import{industries}from"@/content/industries";import{resources}from"@/content/resources";import{walkthroughs}from"@/content/work";import{siteUrl}from"@/lib/seo";
-export default function sitemap():MetadataRoute.Sitemap{const paths=["/","/products","/services","/solutions","/industries","/implementation","/work","/resources","/company/about","/contact","/book-a-demo","/legal/privacy","/legal/terms","/legal/cookies",...products.map(x=>x.slug),...services.map(x=>x.slug),...solutions.map(x=>x.slug),...industries.map(x=>x.slug),...resources.map(x=>`/resources/guides/${x.slug}`),...walkthroughs.map(x=>`/work/${x.slug}`)];return paths.map((path,index)=>({url:new URL(path,siteUrl).toString(),lastModified:new Date("2026-09-12"),changeFrequency:index===0?"weekly":"monthly",priority:index===0?1:(path.split("/").length<=2?.8:.7)}))}
+import type { MetadataRoute } from "next";
+import { services } from "@/content/services";
+import { industries } from "@/content/industries";
+import { insights } from "@/content/insights";
+import { absoluteUrl } from "@/lib/seo";
+
+const LAST_UPDATED = new Date("2026-11-11");
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const entry = (path: string, priority: number, changeFrequency: "weekly" | "monthly" | "yearly" = "monthly", lastModified = LAST_UPDATED) => ({
+    url: absoluteUrl(path),
+    lastModified,
+    changeFrequency,
+    priority,
+  });
+  return [
+    entry("/", 1, "weekly"),
+    entry("/services", 0.9),
+    entry("/industries", 0.9),
+    ...services.map((s) => entry(`/services/${s.slug}`, 0.9)),
+    ...industries.map((i) => entry(`/industries/${i.slug}`, 0.8)),
+    entry("/insights", 0.7, "weekly"),
+    ...insights.map((i) => entry(`/insights/${i.slug}`, 0.6, "monthly", new Date(i.published))),
+    entry("/about", 0.6),
+    entry("/process", 0.6),
+    entry("/contact", 0.7),
+    entry("/legal/privacy", 0.2, "yearly"),
+    entry("/legal/terms", 0.2, "yearly"),
+    entry("/legal/cookies", 0.2, "yearly"),
+  ];
+}

@@ -1,1 +1,0 @@
-import type{PageContent}from"@/content/types";import{ContentPageTemplate}from"./content-page-template";export function ProductPageTemplate({page}:{page:PageContent}){return <ContentPageTemplate page={page} kind="product"/>}

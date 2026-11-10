@@ -1,1 +1,48 @@
-import type{Metadata}from"next";import{Suspense}from"react";import{LeadForm}from"@/components/forms/lead-form";import{SiteBreadcrumbs}from"@/components/ui/site-breadcrumbs";export const metadata:Metadata={title:"Contact VQBYTE",description:"Share the workflow, product or integration you are considering and route the inquiry to the right conversation.",alternates:{canonical:"/contact"}};export default function Page(){return <main id="main"><SiteBreadcrumbs items={[{label:"Contact",href:"/contact"}]}/><section className="form-page"><div className="container form-layout"><div><p className="eyebrow">Contact</p><h1>Tell us what needs to work better.</h1><p className="lede">Share the workflow, product or integration you are considering. We will route your inquiry to the right conversation.</p><ul className="plain-list"><li>Describe the current handoff or system</li><li>Identify the people and locations involved</li><li>Note integrations, data or timing constraints</li></ul></div><Suspense fallback={<p>Loading form…</p>}><LeadForm mode="contact"/></Suspense></div></section></main>}
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { LeadForm } from "@/components/forms/lead-form";
+import { SiteBreadcrumbs } from "@/components/ui/site-breadcrumbs";
+import { site, whatsappLink } from "@/content/site";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Contact Us — Free Consultation",
+  description:
+    "Book a free consultation with VQBYTE about ERP, CRM, LMS, inventory, custom software, SEO or digital marketing. We reply within one business day.",
+  path: "/contact",
+});
+
+export default function ContactPage() {
+  return (
+    <main id="main">
+      <SiteBreadcrumbs items={[{ label: "Contact", href: "/contact" }]} />
+      <section className="form-page">
+        <div className="container form-layout">
+          <div className="contact-intro">
+            <p className="eyebrow">Free consultation</p>
+            <h1>Tell us what you want to achieve</h1>
+            <p className="lede">Share a few details and we&apos;ll arrange a free 30-minute call to understand your needs and suggest the best way forward.</p>
+            <ol className="next-steps">
+              <li><strong>We review your message</strong><span>and reply within one business day.</span></li>
+              <li><strong>Free discovery call</strong><span>to understand your goals and current setup.</span></li>
+              <li><strong>Clear proposal</strong><span>with scope, timeline and price — no obligation.</span></li>
+            </ol>
+            <ul className="contact-details">
+              <li><Mail size={18} aria-hidden="true" /><a href={`mailto:${site.email}`}>{site.email}</a></li>
+              {site.phone && <li><Phone size={18} aria-hidden="true" /><a href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phone}</a></li>}
+              {whatsappLink && <li><MessageCircle size={18} aria-hidden="true" /><a href={whatsappLink} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></li>}
+              {site.address && <li><MapPin size={18} aria-hidden="true" /><span>{site.address}</span></li>}
+              <li><Clock size={18} aria-hidden="true" /><span>{site.hours}</span></li>
+            </ul>
+          </div>
+          <div className="form-card">
+            <Suspense fallback={<p>Loading form…</p>}>
+              <LeadForm />
+            </Suspense>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

@@ -1,7 +1,174 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages */
-import{FormEvent,useEffect,useState}from"react";import{useSearchParams}from"next/navigation";import Link from"next/link";import{track}from"@/lib/analytics";
-const productOptions=["VQ ERP","VQ Inventory","VQ POS","VQ WhatsApp CRM","Custom Software","Web Application","Website & E-commerce","Mobile App","API Integration & Automation","Reporting & Dashboards","Implementation & Migration","Not sure yet"];
-export function LeadForm({mode}:{mode:"contact"|"demo"}){const search=useSearchParams();const initial=search.get("product")??search.get("interest")??"";const map:Record<string,string>={erp:"VQ ERP",inventory:"VQ Inventory",pos:"VQ POS","whatsapp-crm":"VQ WhatsApp CRM","custom-software":"Custom Software","web-application":"Web Application",ecommerce:"Website & E-commerce","mobile-app":"Mobile App",integration:"API Integration & Automation"};const[interest,setInterest]=useState(map[initial]??"");const[method,setMethod]=useState("email");const[state,setState]=useState<"idle"|"loading"|"success"|"error">("idle");const[error,setError]=useState("");useEffect(()=>{if(mode==="demo")track("demo_form_start")},[mode]);async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setState("loading");setError("");const form=new FormData(e.currentTarget);const payload:Record<string,unknown>=Object.fromEntries(form.entries());payload.consent=form.get("consent")==="on";payload.formType=mode;payload.interest=interest;payload.contactMethod=method;payload.submittedAt=new Date().toISOString();payload.sourcePath=window.location.pathname+window.location.search;payload.referrer=document.referrer;try{const res=await fetch("/api/contact",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});const body=await res.json() as {error?:string};if(!res.ok)throw new Error(body.error??"Unable to submit the form.");setState("success");if(mode==="demo")track("demo_form_submit",{interest})}catch(err){setError(err instanceof Error?err.message:"Unable to submit the form.");setState("error")}}
-if(state==="success")return <div className="form-success" role="status"><span>✓</span><h2>Your request has been received.</h2><p>We’ll review the information and contact you using your selected method.</p><Link className="text-link" href="/resources">Prepare with a practical guide →</Link></div>;
-return <form className="lead-form" onSubmit={submit} noValidate><div className="form-grid"><label>Full name <span>*</span><input name="name" autoComplete="name" required minLength={2}/></label><label>Work email <span>*</span><input name="email" type="email" autoComplete="email" required/></label><label>Company <span>*</span><input name="company" autoComplete="organization" required/></label><label>Country or region <span>*</span><input name="country" autoComplete="country-name" required/></label><label className="full">{mode==="demo"?"Product of interest":"What can we help with?"} <span>*</span><select name="interest" value={interest} onChange={e=>setInterest(e.target.value)} required><option value="">Select an option</option>{productOptions.map(o=><option key={o}>{o}</option>)}</select></label>{mode==="demo"&&<><label>Company or team size <span>*</span><select name="teamSize" required><option value="">Select a range</option><option>1–10</option><option>11–50</option><option>51–200</option><option>201+</option></select></label><label>{["VQ ERP","VQ Inventory","VQ POS"].includes(interest)?"Branches or locations":"Current team or user volume"}<input name="locations"/></label><label className="full">Current system or process <textarea name="currentSystem" rows={3}/></label></>}<label className="full">Primary challenge <span>*</span><textarea name="challenge" rows={5} minLength={15} required placeholder="Describe the workflow, handoff or information problem that needs attention."/></label><label>Preferred contact method <span>*</span><select name="contactMethod" value={method} onChange={e=>setMethod(e.target.value)}><option value="email">Email</option><option value="phone">Phone</option><option value="whatsapp">WhatsApp</option></select></label><label>Phone {method!=="email"&&<span>*</span>}<input name="phone" type="tel" autoComplete="tel" required={method!=="email"}/></label><label className="honeypot" aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off"/></label><label className="consent full"><input name="consent" type="checkbox" required/><span>I agree that VQBYTE may use this information to respond to my inquiry. <a href="/legal/privacy">Read the privacy notice.</a></span></label></div>{state==="error"&&<p className="form-error" role="alert">{error}</p>}<button className="button button-primary" type="submit" disabled={state==="loading"}>{state==="loading"?"Sending…":mode==="demo"?"Send Demo Request":"Send Inquiry"} <span aria-hidden="true">→</span></button><p className="form-note">Submission routing is configurable. No response-time promise is made until staffing is confirmed.</p></form>}
+import Link from "next/link";
+import { FormEvent, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { CircleCheck } from "lucide-react";
+import { track } from "@/lib/analytics";
+import { services } from "@/content/services";
+import { industryBySlug } from "@/content/industries";
+
+const otherOptions = ["Not sure yet — need advice"];
+
+export function LeadForm() {
+  const search = useSearchParams();
+  const interestParam = search.get("interest") ?? "";
+  const industryParam = search.get("industry") ?? "";
+  const initialInterest = services.find((s) => s.slug === interestParam)?.name ?? "";
+  const industryName = industryBySlug[industryParam]?.name;
+
+  const [interest, setInterest] = useState(initialInterest);
+  const [method, setMethod] = useState("email");
+  const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [error, setError] = useState("");
+  const [started, setStarted] = useState(false);
+
+  function onStart() {
+    if (started) return;
+    setStarted(true);
+    track("lead_form_start");
+  }
+
+  async function submit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formEl = e.currentTarget;
+    if (!formEl.checkValidity()) {
+      formEl.reportValidity();
+      return;
+    }
+    setState("loading");
+    setError("");
+    const form = new FormData(formEl);
+    const payload: Record<string, unknown> = Object.fromEntries(form.entries());
+    payload.consent = form.get("consent") === "on";
+    payload.interest = interest;
+    payload.contactMethod = method;
+    if (industryName) payload.message = `[Industry: ${industryName}] ${payload.message ?? ""}`;
+    payload.sourcePath = window.location.pathname + window.location.search;
+    payload.referrer = document.referrer;
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(body.error ?? "We couldn't send your message. Please try again.");
+      setState("success");
+      track("lead_form_submit", { interest });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "We couldn't send your message. Please try again.");
+      setState("error");
+    }
+  }
+
+  if (state === "success")
+    return (
+      <div className="form-success" role="status">
+        <CircleCheck size={40} aria-hidden="true" />
+        <h2>Thank you — we&apos;ve received your message.</h2>
+        <p>A member of our team will reply within one business day using your preferred contact method.</p>
+        <Link className="text-link" href="/insights">
+          Read our guides while you wait →
+        </Link>
+      </div>
+    );
+
+  return (
+    <form className="lead-form" onSubmit={submit} onFocus={onStart} noValidate={false}>
+      <div className="form-grid">
+        <label>
+          Full name <span aria-hidden="true">*</span>
+          <input name="name" autoComplete="name" required minLength={2} maxLength={100} />
+        </label>
+        <label>
+          Work email <span aria-hidden="true">*</span>
+          <input name="email" type="email" autoComplete="email" required maxLength={200} />
+        </label>
+        <label>
+          Company <span aria-hidden="true">*</span>
+          <input name="company" autoComplete="organization" required minLength={2} maxLength={150} />
+        </label>
+        <label>
+          Country
+          <input name="country" autoComplete="country-name" maxLength={100} />
+        </label>
+        <label className="full">
+          What do you need help with? <span aria-hidden="true">*</span>
+          <select name="interest" value={interest} onChange={(e) => setInterest(e.target.value)} required>
+            <option value="">Select a service</option>
+            {services.map((s) => (
+              <option key={s.slug}>{s.name}</option>
+            ))}
+            {otherOptions.map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Company size
+          <select name="companySize" defaultValue="">
+            <option value="">Select</option>
+            <option>1–10 employees</option>
+            <option>11–50 employees</option>
+            <option>51–250 employees</option>
+            <option>251–1,000 employees</option>
+            <option>1,000+ employees</option>
+          </select>
+        </label>
+        <label>
+          When do you want to start?
+          <select name="timeline" defaultValue="">
+            <option value="">Select</option>
+            <option>As soon as possible</option>
+            <option>Within 1–3 months</option>
+            <option>In 3–6 months</option>
+            <option>Just researching</option>
+          </select>
+        </label>
+        <label className="full">
+          Tell us about your project <span aria-hidden="true">*</span>
+          <textarea
+            name="message"
+            rows={5}
+            required
+            minLength={10}
+            maxLength={3000}
+            placeholder="What are you trying to achieve, and what's getting in the way today?"
+          />
+        </label>
+        <label>
+          Preferred contact method
+          <select name="contactMethod" value={method} onChange={(e) => setMethod(e.target.value)}>
+            <option value="email">Email</option>
+            <option value="phone">Phone call</option>
+            <option value="whatsapp">WhatsApp</option>
+          </select>
+        </label>
+        <label>
+          Phone {method !== "email" && <span aria-hidden="true">*</span>}
+          <input name="phone" type="tel" autoComplete="tel" required={method !== "email"} maxLength={40} />
+        </label>
+        <label className="honeypot" aria-hidden="true">
+          Website
+          <input name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+        <label className="consent full">
+          <input name="consent" type="checkbox" required />
+          <span>
+            I agree that VQBYTE may use these details to respond to my enquiry, as described in the{" "}
+            <Link href="/legal/privacy">privacy policy</Link>.
+          </span>
+        </label>
+      </div>
+      {state === "error" && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
+      <button className="button button-primary" type="submit" disabled={state === "loading"}>
+        {state === "loading" ? "Sending…" : "Send message"} <span aria-hidden="true">→</span>
+      </button>
+      <p className="form-note">We reply within one business day. Your details are never shared or sold.</p>
+    </form>
+  );
+}

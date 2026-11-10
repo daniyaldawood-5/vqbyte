@@ -1,2 +1,27 @@
-import{z}from"zod";
-export const leadSchema=z.object({formType:z.enum(["contact","demo"]),name:z.string().trim().min(2).max(100),email:z.string().trim().email().max(200),company:z.string().trim().min(2).max(150),country:z.string().trim().min(2).max(100),interest:z.string().trim().min(2).max(100),challenge:z.string().trim().min(15).max(3000),contactMethod:z.enum(["email","phone","whatsapp"]),phone:z.string().trim().max(40).optional(),consent:z.literal(true),website:z.string().max(0),teamSize:z.string().max(50).optional(),currentSystem:z.string().max(500).optional(),locations:z.string().max(100).optional(),volume:z.string().max(100).optional(),sourcePath:z.string().max(300).optional(),referrer:z.string().max(500).optional(),submittedAt:z.string().datetime()}).superRefine((data,ctx)=>{if(["phone","whatsapp"].includes(data.contactMethod)&&!data.phone)ctx.addIssue({code:"custom",path:["phone"],message:"Add a phone number for the selected contact method."})});
+import { z } from "zod";
+
+export const leadSchema = z
+  .object({
+    name: z.string().trim().min(2, "Please enter your name.").max(100),
+    email: z.string().trim().email("Please enter a valid email address.").max(200),
+    company: z.string().trim().min(2, "Please enter your company name.").max(150),
+    country: z.string().trim().max(100).optional().default(""),
+    interest: z.string().trim().min(2, "Please choose what you need help with.").max(100),
+    companySize: z.string().trim().max(50).optional().default(""),
+    budget: z.string().trim().max(50).optional().default(""),
+    timeline: z.string().trim().max(50).optional().default(""),
+    message: z.string().trim().min(10, "Please tell us a little more (at least 10 characters).").max(3000),
+    contactMethod: z.enum(["email", "phone", "whatsapp"]).default("email"),
+    phone: z.string().trim().max(40).optional().default(""),
+    consent: z.literal(true, { errorMap: () => ({ message: "Please accept the privacy policy." }) }),
+    website: z.string().max(0).optional().default(""),
+    sourcePath: z.string().max(300).optional().default(""),
+    referrer: z.string().max(500).optional().default(""),
+  })
+  .superRefine((data, ctx) => {
+    if (data.contactMethod !== "email" && data.phone.replace(/[^0-9]/g, "").length < 7) {
+      ctx.addIssue({ code: "custom", path: ["phone"], message: "Please add a phone number for the selected contact method." });
+    }
+  });
+
+export type Lead = z.infer<typeof leadSchema>;

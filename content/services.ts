@@ -1,32 +1,918 @@
-import type{PageContent}from"./types";
-const faq=[{question:"How does an engagement begin?",answer:"A focused discovery identifies users, the operational problem, constraints, dependencies and a testable definition of success before implementation scope is agreed."},{question:"Can VQBYTE work with an existing system?",answer:"Yes, after reviewing its architecture, code access, data, integrations and operational risks. Modernization can be phased where that reduces disruption."},{question:"How are timeline and cost estimated?",answer:"They are based on agreed scope, unknowns, dependencies, quality requirements, release needs and the level of client participation. No universal timeline is promised."},{question:"What happens after launch?",answer:"Support, monitoring, maintenance and improvement responsibilities are agreed for the specific system before release."}];
-export const services:PageContent[]=[
- {slug:"/services/custom-software-development",label:"Custom Software Development",eyebrow:"Engineering Services",title:"Custom software built around a defined operational problem.",description:"Turn manual processes, disconnected tools or a new product idea into maintainable software with clear users, workflows, permissions and business outcomes.",metaTitle:"Custom Software Development for Operational Workflows",metaDescription:"Design and build maintainable operational platforms, portals and SaaS products around defined users, workflows and outcomes.",primaryCta:{label:"Discuss Your Software Project",href:"/contact?interest=custom-software"},workflow:["Discover","Define","Design","Build and test","Release and improve"],sections:[
-  {title:"Use custom engineering where the workflow is genuinely specific.",body:"A new build is appropriate when important processes cannot be configured safely in an existing product or when the software itself is the product.",items:[{title:"Operational platforms",body:"Unify role-based tasks, records, approvals and reporting."},{title:"Admin portals",body:"Give internal teams controlled tools for managing customers, content, orders or operations."},{title:"SaaS and marketplaces",body:"Define tenant, role, transaction and lifecycle boundaries before implementation."},{title:"Booking and service systems",body:"Connect availability, assignment, status, communication and reporting."}]},
-  {title:"Discovery creates buildable decisions.",body:"Outputs can include workflow maps, user roles, scope boundaries, data entities, integration needs, risk register and acceptance criteria."},
-  {title:"Design the experience and system together.",body:"User flows, interface states, permissions, API boundaries, data ownership and failure behavior are resolved as one system—not separate design and engineering exercises."},
-  {title:"Engineering includes quality and operational readiness.",body:"Frontend, backend, tests, security review, deployment, monitoring and maintenance are scoped according to the system’s risk and use."}],faqs:faq},
- {slug:"/services/web-application-development",label:"Web Application Development",eyebrow:"Web Applications",title:"Build a web application people can use to get real work done.",description:"VQBYTE designs and develops responsive portals, dashboards, SaaS products, marketplaces and operational web systems with usable workflows and maintainable architecture.",metaTitle:"Custom Web Application Development Services",metaDescription:"Build responsive portals, dashboards, SaaS products and operational web applications with usable workflows and maintainable architecture.",primaryCta:{label:"Plan Your Web Application",href:"/contact?interest=web-application"},workflow:["Map roles","Prototype flows","Build the system","Test real tasks","Release safely"],sections:[
-  {title:"Start with the work, users and permissions.",body:"The application is structured around who acts, what they need to decide and where responsibility changes.",items:[{title:"Portals",body:"Customer, supplier, partner or staff journeys with appropriate account and data boundaries."},{title:"Operational dashboards",body:"Role-based views connected to defined source data and drill-down paths."},{title:"SaaS products",body:"Account lifecycle, plans, tenant boundaries and administration designed deliberately."},{title:"Marketplaces and booking",body:"Multi-party workflows, availability, transactions, notifications and exception handling."}]},
-  {title:"Build every state users depend on.",body:"Authentication, permissions, forms, files, notifications, reports, loading, empty, error and recovery states are included in the workflow design."},
-  {title:"Choose architecture that can be owned.",body:"Frontend, APIs, data models, integrations and deployment are documented to match expected scale, security needs and maintenance capacity."},
-  {title:"Responsive and PWA needs are requirement-led.",body:"Mobile layouts are standard; installability, offline behavior, background sync or device features are added only when the use case justifies their complexity."}],faqs:faq},
- {slug:"/services/ecommerce-development",label:"Website & E-commerce Development",eyebrow:"Websites & Commerce",title:"Websites and commerce experiences connected to the work behind them.",description:"Create a fast, clear customer journey and connect inquiries, products, orders, payments, inventory or internal operations where the project requires it.",metaTitle:"Website and E-commerce Development Services",metaDescription:"Create fast service websites and commerce experiences connected to inquiries, products, orders, payments and internal operations.",primaryCta:{label:"Discuss Your Website or Store",href:"/contact?interest=ecommerce"},workflow:["Clarify journey","Structure content","Design and build","Connect operations","Measure and improve"],sections:[
-  {title:"Match the site to the commercial journey.",body:"Corporate and service sites prioritize understanding and qualified inquiry; commerce projects must also control catalogue, cart, checkout and order states.",items:[{title:"Service websites",body:"Clear positioning, page architecture, proof requirements and routed inquiries."},{title:"E-commerce",body:"Product discovery, purchase decisions, checkout and post-order status designed as one journey."},{title:"Content systems",body:"Structured editing and governance appropriate to the publishing team."}]},
-  {title:"Connect the customer experience to operations.",body:"Inventory, payments, order management, CRM and fulfilment connections are scoped only where supported by verified platform APIs and business rules."},
-  {title:"Platform choice follows the requirements.",body:"Shopify, WooCommerce or custom commerce is recommended only after product model, checkout, integration, ownership and maintenance needs are understood."},
-  {title:"Performance, accessibility and SEO are foundations.",body:"Semantic content, responsive imagery, stable layouts, crawlable pages and accessible controls are designed before launch, then measured and maintained."}],faqs:faq},
- {slug:"/services/mobile-app-development",label:"Android & iOS App Development",eyebrow:"Mobile Applications",title:"Mobile applications designed around the moment they are used.",description:"Build customer-facing, staff and field-operation apps for Android and iOS with focused journeys, secure system connections and a practical release plan.",metaTitle:"Android and iOS App Development Services",metaDescription:"Build customer, staff and field-operation mobile apps for Android and iOS with focused journeys and secure system connections.",primaryCta:{label:"Discuss Your App",href:"/contact?interest=mobile-app"},workflow:["Define the moment","Prototype","Build app and API","Test devices","Prepare release"],sections:[
-  {title:"Scope the job, environment and device needs.",body:"Users, connectivity, offline expectations, notifications, camera or scanning needs and security constraints determine the product shape.",items:[{title:"Customer apps",body:"Accounts, booking, orders, subscriptions, payments and support where required."},{title:"Operational apps",body:"Field visits, delivery, sales, inventory, approvals and reporting around a focused task."},{title:"Admin and backend",body:"Secure APIs and operational controls needed to manage the mobile experience."}]},
-  {title:"Choose native or cross-platform for the right reasons.",body:"Recommendation depends on device capabilities, performance, release cadence, team skills, platform differences and total ownership cost."},
-  {title:"Test the conditions users will face.",body:"Device coverage, variable networks, interruptions, permissions, accessibility, performance and recovery states are part of QA."},
-  {title:"Prepare for stores without approval promises.",body:"VQBYTE can prepare builds, listings, privacy inputs and release workflows, but Apple and Google control review and approval."},
-  {title:"Operate the application after release.",body:"Analytics, crash monitoring, backend health, dependency maintenance and version updates are assigned owners before launch."}],faqs:[...faq,{question:"Android, iOS or both?",answer:"The platform plan follows the target users and business case. A cross-platform approach may cover both, but device requirements and platform differences still need testing."}]},
- {slug:"/services/api-integration-automation",label:"API Integration & Automation",eyebrow:"Integration Engineering",title:"Connect systems so information moves without repeated manual work.",description:"Integrate business platforms, commerce, messaging, payments and internal tools through documented APIs, webhooks and monitored workflows.",metaTitle:"API Integration and Workflow Automation Services",metaDescription:"Connect business platforms through documented APIs, webhooks, mapped data and monitored workflows with visible failures and retries.",primaryCta:{label:"Map Your Integration",href:"/contact?interest=integration"},workflow:["Select source","Map data","Authenticate","Move and validate","Monitor exceptions"],sections:[
-  {title:"Integration starts with ownership, not endpoints.",body:"Decide which system owns each record, when information moves, who may change it and what happens when systems disagree."},
-  {title:"Map the data and event contract.",body:"Fields, identifiers, transformations, sync direction, timing, idempotency and expected volumes are documented before implementation."},
-  {title:"Handle security and failure as first-class behavior.",body:"Authentication, secret handling, permissions, retries, dead-letter or review queues and audit history are defined for the integration’s risk."},
-  {title:"Automate only a controlled workflow.",body:"Triggers, conditions, approvals, exception paths and manual recovery remain visible so automation does not hide operational problems."},
-  {title:"Test and monitor the real exchange.",body:"Sandbox and production checks cover duplicates, partial failure, rate limits, schema changes, alerts and support ownership."}],faqs:faq},
+import type { Faq, Service, ServiceCategory } from "./types";
+
+export const serviceCategories: { id: ServiceCategory; title: string; description: string }[] = [
+  {
+    id: "business-software",
+    title: "Business software",
+    description: "ERP, CRM, LMS, inventory and POS systems that run your day-to-day operations.",
+  },
+  {
+    id: "engineering",
+    title: "Custom engineering",
+    description: "Custom software, web and mobile apps, integrations and dashboards built around your process.",
+  },
+  {
+    id: "growth",
+    title: "Growth marketing",
+    description: "SEO, digital marketing and high-converting websites that bring qualified customers to you.",
+  },
 ];
-export const serviceBySlug=Object.fromEntries(services.map(p=>[p.slug.split("/").pop()!,p]));
+
+const engagementFaqs: Faq[] = [
+  {
+    question: "How much does it cost?",
+    answer:
+      "Cost depends on the number of users, modules, integrations, data migration and how much is custom. After a free discovery call we send a fixed-scope proposal with a clear price, timeline and phases, so there are no surprises.",
+  },
+  {
+    question: "How long does a typical project take?",
+    answer:
+      "Focused projects usually go live in 4–8 weeks. Larger multi-module or multi-location rollouts are delivered in phases, with the first phase typically live within 8–12 weeks so your team sees value early.",
+  },
+  {
+    question: "Do you provide support after launch?",
+    answer:
+      "Yes. Every project includes a post-launch support period, and we offer monthly support and improvement plans covering fixes, updates, monitoring, training and new features.",
+  },
+];
+
+export const services: Service[] = [
+  {
+    slug: "erp-software",
+    name: "ERP Software Development",
+    short: "ERP Software",
+    category: "business-software",
+    icon: "LayoutDashboard",
+    metaTitle: "ERP Software Development & Custom ERP Solutions",
+    metaDescription:
+      "Custom ERP software for small, mid-sized and enterprise businesses. Connect finance, sales, purchasing, inventory, production and HR in one system.",
+    keywords: ["ERP software", "custom ERP development", "ERP for small business", "cloud ERP", "ERP implementation"],
+    eyebrow: "ERP software",
+    h1: "ERP software that runs your whole business from one place",
+    intro:
+      "Stop stitching your company together with spreadsheets and disconnected apps. We build and implement ERP software that connects finance, sales, purchasing, inventory, production and HR — configured around how your business actually works.",
+    image: "/images/erp-dashboard.svg",
+    imageAlt: "VQ ERP dashboard showing finance, sales, purchasing and production modules with a cash-flow chart",
+    pains: [
+      "Every department keeps its own spreadsheet and the numbers never match",
+      "Month-end closing takes days of manual reconciliation",
+      "You can't see real-time stock, orders or cash position",
+      "Approvals happen over email and WhatsApp with no audit trail",
+      "Your current software can't keep up as you add branches or warehouses",
+    ],
+    outcomes: [
+      { title: "One source of truth", body: "Every team works from the same live data, so reports match and decisions are faster." },
+      { title: "Faster month-end", body: "Transactions post automatically to accounts, cutting manual reconciliation work." },
+      { title: "Control as you grow", body: "Add users, branches, warehouses and companies without changing systems." },
+      { title: "Clear accountability", body: "Role-based approvals and a full audit trail show who did what and when." },
+    ],
+    featuresTitle: "ERP modules we build and configure",
+    features: [
+      { title: "Finance & accounting", body: "General ledger, payables, receivables, bank reconciliation, multi-currency and tax." },
+      { title: "Sales & orders", body: "Quotations, sales orders, pricing rules, credit limits, invoicing and returns." },
+      { title: "Purchasing & suppliers", body: "Purchase requests, approvals, purchase orders, goods receipt and supplier bills." },
+      { title: "Inventory & warehouses", body: "Multi-warehouse stock, batches, serials, transfers, counts and reorder points." },
+      { title: "Production & manufacturing", body: "Bills of materials, work orders, routing, material consumption and costing." },
+      { title: "HR & payroll", body: "Employee records, attendance, leave, payroll runs and expense claims." },
+      { title: "Projects & job costing", body: "Budgets, milestones, timesheets and profitability by project or job." },
+      { title: "Reports & dashboards", body: "Live KPIs, drill-down reports and scheduled exports for every role." },
+    ],
+    spotlight: {
+      title: "Built around your process — not the other way round",
+      body: "Off-the-shelf ERP forces your team to change how it works. We start with a discovery workshop, map your real workflows, then configure our VQ ERP platform and build only the custom pieces you genuinely need.",
+      points: [
+        "Phased rollout: start with the module that hurts most",
+        "Data migration from Excel, QuickBooks, Tally, Sage or legacy systems",
+        "Cloud-hosted or on your own servers",
+        "Integrations with e-commerce, banks, payment gateways and government portals",
+      ],
+      image: "/images/analytics-reporting.svg",
+      imageAlt: "ERP management reports with charts, KPIs and a regional sales map",
+    },
+    deliverables: [
+      "Discovery workshop and process map",
+      "Configured ERP with your chart of accounts, products and users",
+      "Data migration and reconciliation",
+      "User training and admin handover",
+      "Go-live support and a monthly improvement plan",
+    ],
+    industries: ["manufacturing", "wholesale-distribution", "oil-gas", "construction-real-estate", "warehousing-logistics"],
+    related: ["inventory-warehouse-management", "crm-software", "business-intelligence-dashboards", "api-integration-automation"],
+    faqs: [
+      {
+        question: "Is your ERP suitable for a small business?",
+        answer:
+          "Yes. You can start with only the modules you need — for example sales, inventory and accounting — and add production, HR or multi-branch features later without migrating to a new system.",
+      },
+      {
+        question: "Can you migrate our data from our current software?",
+        answer:
+          "Yes. We migrate customers, suppliers, products, opening balances and open transactions from spreadsheets and common accounting or ERP systems, and reconcile totals with you before go-live.",
+      },
+      {
+        question: "Cloud or on-premise?",
+        answer:
+          "Both are possible. Most clients choose cloud hosting for lower upfront cost and remote access; on-premise is available when your policies or connectivity require it.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "crm-software",
+    name: "CRM Software Development",
+    short: "CRM Software",
+    category: "business-software",
+    icon: "Users",
+    metaTitle: "CRM Software Development & WhatsApp CRM",
+    metaDescription:
+      "Custom CRM software to manage leads, sales pipelines, customer support and WhatsApp conversations. Never lose a lead or follow-up again.",
+    keywords: ["CRM software", "custom CRM development", "sales CRM", "WhatsApp CRM", "CRM for small business"],
+    eyebrow: "CRM software",
+    h1: "CRM software that turns more leads into loyal customers",
+    intro:
+      "Every lead, call, email and WhatsApp message in one place — with a clear owner and a next step. We build and implement CRM systems that help your sales and support teams follow up faster and close more deals.",
+    image: "/images/crm-pipeline.svg",
+    imageAlt: "CRM sales pipeline board with lead, qualified, proposal and won stages next to a customer conversation",
+    pains: [
+      "Leads come in from the website, phone and WhatsApp and some are simply forgotten",
+      "Customer history lives on salespeople's personal phones",
+      "Managers can't see the pipeline or forecast revenue",
+      "Two people reply to the same customer — or nobody does",
+      "Follow-ups depend on memory instead of reminders",
+    ],
+    outcomes: [
+      { title: "No lead left behind", body: "Every enquiry is captured automatically and assigned to an owner." },
+      { title: "Faster response", body: "Shared inbox, templates and reminders help your team reply in minutes, not days." },
+      { title: "Predictable revenue", body: "A visual pipeline and forecasts show exactly what will close this month." },
+      { title: "Customer data you own", body: "History stays with the company when staff change roles or leave." },
+    ],
+    featuresTitle: "What your CRM can include",
+    features: [
+      { title: "Lead capture", body: "Website forms, landing pages, ads, email and WhatsApp feed straight into the CRM." },
+      { title: "Sales pipeline", body: "Drag-and-drop deal stages, values, probability and expected close dates." },
+      { title: "WhatsApp team inbox", body: "Multiple agents on one WhatsApp Business number with assignment and notes." },
+      { title: "Tasks & reminders", body: "Automatic follow-up tasks so no call or quote is forgotten." },
+      { title: "Quotes & invoices", body: "Create quotations from the deal and convert them to orders in your ERP." },
+      { title: "Support tickets", body: "Track customer issues with priorities, SLAs and resolution history." },
+      { title: "Campaigns", body: "Segment customers and send approved email or WhatsApp campaigns." },
+      { title: "Sales reports", body: "Conversion rates, team performance, revenue forecasts and lead sources." },
+    ],
+    spotlight: {
+      title: "Your sales process, mapped into the CRM",
+      body: "We configure stages, fields, automations and permissions to match the way your team sells — whether that is B2B quotations, retail walk-ins, property sales or course enrolments.",
+      points: [
+        "Connects with your ERP, website, e-commerce store and accounting",
+        "Official WhatsApp Business Platform onboarding",
+        "Mobile-friendly for field sales teams",
+        "Role-based access so each person sees what they need",
+      ],
+      image: "/images/team-collaboration.svg",
+      imageAlt: "Sales and support team working together with CRM dashboards on their screens",
+    },
+    deliverables: [
+      "Pipeline and process design",
+      "Configured CRM with your stages, fields and users",
+      "Lead-source and WhatsApp integrations",
+      "Import of existing contacts and deals",
+      "Team training and sales-manager dashboards",
+    ],
+    industries: ["construction-real-estate", "education-training", "wholesale-distribution", "field-professional-services", "retail-ecommerce"],
+    related: ["erp-software", "digital-marketing", "api-integration-automation", "seo-services"],
+    faqs: [
+      {
+        question: "Can several team members use one WhatsApp number?",
+        answer:
+          "Yes. Through the official WhatsApp Business Platform, multiple agents can work from one shared inbox, with chats assigned to the right person. Meta's own approval rules and fees apply and we guide you through onboarding.",
+      },
+      {
+        question: "Can the CRM connect to our website and ads?",
+        answer:
+          "Yes. Website forms, landing pages and lead-ad forms can create leads automatically, tagged with their source so you know which channels bring paying customers.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "lms-development",
+    name: "LMS Development",
+    short: "LMS Development",
+    category: "business-software",
+    icon: "GraduationCap",
+    metaTitle: "LMS Development — Custom Learning Management Systems",
+    metaDescription:
+      "Custom LMS development for schools, training providers and companies. Online courses, quizzes, certificates, live classes, payments and reporting.",
+    keywords: ["LMS development", "custom learning management system", "corporate LMS", "online course platform", "e-learning software"],
+    eyebrow: "Learning management systems",
+    h1: "A learning platform your students and staff will actually use",
+    intro:
+      "Deliver courses, training and certifications online with an LMS built for your brand and your learners. We build custom learning management systems for academies, schools, training institutes and companies that train their own teams.",
+    image: "/images/lms-platform.svg",
+    imageAlt: "LMS course player with lesson list, progress ring, quiz and certificate badge",
+    pains: [
+      "Course material is scattered across drives, email and messaging groups",
+      "You can't see who finished training or passed an assessment",
+      "Generic course platforms take a cut of every sale and limit your branding",
+      "Onboarding new employees takes too much trainer time",
+      "Compliance training records are hard to prove during audits",
+    ],
+    outcomes: [
+      { title: "Train at scale", body: "Deliver the same quality training to 10 or 10,000 learners." },
+      { title: "Proof of completion", body: "Track progress, scores and certificates for every learner." },
+      { title: "New revenue", body: "Sell courses and subscriptions under your own brand with online payments." },
+      { title: "Less trainer time", body: "Self-paced lessons and automatic grading free your experts." },
+    ],
+    featuresTitle: "LMS features we build",
+    features: [
+      { title: "Course builder", body: "Video, documents, SCORM content, assignments and drip-scheduled lessons." },
+      { title: "Quizzes & exams", body: "Question banks, timed exams, automatic grading and retakes." },
+      { title: "Certificates", body: "Branded, verifiable certificates issued automatically on completion." },
+      { title: "Live classes", body: "Scheduled virtual classrooms with attendance tracking." },
+      { title: "Payments & subscriptions", body: "Sell single courses, bundles or memberships with local and global gateways." },
+      { title: "Learning paths", body: "Role-based training paths for onboarding, skills and compliance." },
+      { title: "Mobile learning", body: "Responsive design and optional mobile apps with offline viewing." },
+      { title: "Reports", body: "Progress, completion, scores and engagement by learner, group or course." },
+    ],
+    spotlight: {
+      title: "For academies, schools and corporate training teams",
+      body: "Whether you sell courses to the public or train your own staff, we shape the LMS around your learners: enrolment, content, assessment, certification and reporting.",
+      points: [
+        "Multi-tenant setups for franchises and partner institutes",
+        "HR and ERP integration for employee training records",
+        "Arabic, Urdu and other right-to-left language support",
+        "Single sign-on with Microsoft or Google accounts",
+      ],
+      image: "/images/education-training.svg",
+      imageAlt: "Learners in a training session using laptops with a course progress overlay",
+    },
+    deliverables: [
+      "Learning experience and course-structure design",
+      "Branded web LMS (and optional mobile apps)",
+      "Payment gateway and integration setup",
+      "Content upload support and admin training",
+      "Hosting, monitoring and ongoing support",
+    ],
+    industries: ["education-training", "manufacturing", "oil-gas", "retail-ecommerce"],
+    related: ["mobile-app-development", "web-application-development", "digital-marketing", "crm-software"],
+    faqs: [
+      {
+        question: "Why build a custom LMS instead of using an existing course platform?",
+        answer:
+          "A custom LMS gives you full branding, no per-sale platform commission, ownership of your learner data and the freedom to add workflows such as HR integration, franchise management or custom assessments.",
+      },
+      {
+        question: "Can we sell courses online?",
+        answer:
+          "Yes. We integrate payment gateways for one-off course sales, bundles, coupons and recurring subscriptions.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "inventory-warehouse-management",
+    name: "Inventory & Warehouse Management Software",
+    short: "Inventory & Warehouse",
+    category: "business-software",
+    icon: "Warehouse",
+    metaTitle: "Inventory & Warehouse Management Software (WMS)",
+    metaDescription:
+      "Inventory and warehouse management software with barcode scanning, multi-warehouse stock, bin locations, picking, transfers and real-time stock levels.",
+    keywords: ["inventory management software", "warehouse management system", "WMS", "stock management software", "barcode inventory system"],
+    eyebrow: "Inventory & warehouse management",
+    h1: "Know exactly what's in stock, where it is and what's moving",
+    intro:
+      "Real-time inventory and warehouse management with barcode scanning, bin locations and multi-warehouse control. Stop losing money to stock-outs, over-stocking, shrinkage and slow picking.",
+    image: "/images/inventory-wms.svg",
+    imageAlt: "Warehouse management screen with SKU table, bin location heat map and a handheld barcode scanner",
+    pains: [
+      "System stock never matches what's on the shelf",
+      "Pickers waste time searching for items",
+      "You run out of best-sellers while slow movers pile up",
+      "Transfers between branches or warehouses get lost",
+      "Stock counts shut the warehouse down for days",
+    ],
+    outcomes: [
+      { title: "Accurate stock", body: "Every receipt, move and dispatch is scanned and recorded in real time." },
+      { title: "Faster fulfilment", body: "Guided picking by bin location gets orders out the door sooner." },
+      { title: "Lower carrying cost", body: "Reorder points and ageing reports keep the right stock at the right level." },
+      { title: "Less shrinkage", body: "Every adjustment needs a reason and an approver." },
+    ],
+    featuresTitle: "Inventory and WMS features",
+    features: [
+      { title: "Multi-warehouse stock", body: "Live quantities by warehouse, zone, rack and bin." },
+      { title: "Barcode & QR scanning", body: "Receive, put away, pick, pack and count with mobile scanners." },
+      { title: "Batch, lot & serial", body: "Expiry dates, FIFO/FEFO and full traceability for recalls." },
+      { title: "Receiving & put-away", body: "Check goods against purchase orders and direct them to the right bin." },
+      { title: "Picking & packing", body: "Wave, batch and order picking with packing slips and labels." },
+      { title: "Transfers", body: "Track stock in transit between branches with confirmations at both ends." },
+      { title: "Cycle counts", body: "Count a section at a time without stopping operations." },
+      { title: "Replenishment", body: "Min/max levels, reorder alerts and purchase suggestions." },
+    ],
+    spotlight: {
+      title: "Built for real warehouse floors",
+      body: "Our inventory system works on rugged Android scanners, tablets and desktops, and connects to your ERP, POS and online store so every sale and purchase updates stock automatically.",
+      points: [
+        "Works with common handheld scanners and label printers",
+        "3PL support: stock and billing by client",
+        "Offline scanning that syncs when the connection returns",
+        "Dashboards for stock value, ageing and turnover",
+      ],
+      image: "/images/warehouse-operations.svg",
+      imageAlt: "Warehouse worker scanning boxes on pallet racks while a forklift moves stock",
+    },
+    deliverables: [
+      "Warehouse layout and bin-location setup",
+      "Configured inventory system with item master import",
+      "Scanner and label printer setup",
+      "Opening stock count and reconciliation",
+      "Floor-staff training and go-live support",
+    ],
+    industries: ["warehousing-logistics", "wholesale-distribution", "retail-ecommerce", "manufacturing", "oil-gas"],
+    related: ["erp-software", "pos-software", "mobile-app-development", "api-integration-automation"],
+    faqs: [
+      {
+        question: "Do we need special hardware?",
+        answer:
+          "Not necessarily. You can start with smartphones or tablets using the camera to scan barcodes. For busy warehouses we recommend rugged Android scanners and thermal label printers and help you choose them.",
+      },
+      {
+        question: "Can it connect to our online store and POS?",
+        answer:
+          "Yes. Sales from your POS and e-commerce channels can update stock automatically so you don't oversell.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "pos-software",
+    name: "POS Software",
+    short: "POS Software",
+    category: "business-software",
+    icon: "ScanBarcode",
+    metaTitle: "POS Software for Retail & Multi-Branch Stores",
+    metaDescription:
+      "Fast, reliable POS software for retail shops and multi-branch stores. Checkout, returns, loyalty, inventory sync and branch reporting in one system.",
+    keywords: ["POS software", "point of sale system", "retail POS", "multi-branch POS", "POS with inventory"],
+    eyebrow: "Point of sale",
+    h1: "POS software that keeps checkout fast and every branch in sync",
+    intro:
+      "A simple checkout for your cashiers and complete visibility for you. Our POS connects sales, stock, customers and branches so you always know what's selling and where.",
+    image: "/images/pos-system.svg",
+    imageAlt: "Tablet POS checkout with product grid, cart, total and a receipt printer",
+    pains: [
+      "Long queues because checkout is slow",
+      "Branch sales only reach head office at the end of the day",
+      "Cashiers give discounts without approval",
+      "Returns and exchanges are hard to trace",
+      "Stock levels are wrong because POS and inventory aren't connected",
+    ],
+    outcomes: [
+      { title: "Faster checkout", body: "Barcode scanning, quick keys and split payments keep queues short." },
+      { title: "Live branch view", body: "See sales, cash and stock for every branch as it happens." },
+      { title: "Fewer losses", body: "Permission-based discounts, voids and cash-drawer controls." },
+      { title: "Repeat customers", body: "Loyalty points, customer history and targeted offers." },
+    ],
+    featuresTitle: "POS features",
+    features: [
+      { title: "Quick checkout", body: "Barcode, search and favourites with cash, card and wallet payments." },
+      { title: "Returns & exchanges", body: "Linked to the original receipt with reason codes." },
+      { title: "Shift & cash management", body: "Opening float, cash-in/out and end-of-day reports." },
+      { title: "Promotions", body: "Discounts, bundles, happy hours and coupon codes." },
+      { title: "Loyalty & customers", body: "Points, membership tiers and purchase history." },
+      { title: "Offline mode", body: "Keep selling when the internet drops; sync later." },
+      { title: "Hardware support", body: "Receipt printers, cash drawers, scanners and customer displays." },
+      { title: "Tax & e-invoicing", body: "Configurable tax rules and integration with tax-authority systems where required." },
+    ],
+    spotlight: {
+      title: "One system from shop floor to head office",
+      body: "POS, inventory and ERP share the same data, so a sale updates stock, accounting and reports instantly — across every branch.",
+      points: [
+        "Central price and product management",
+        "Branch-to-branch stock transfers",
+        "Works on tablets, touchscreens and desktops",
+        "Integrates with your e-commerce store",
+      ],
+      image: "/images/retail-store.svg",
+      imageAlt: "Modern retail store with a cashier at the POS counter serving a customer",
+    },
+    deliverables: [
+      "Store and branch configuration",
+      "Product, price and tax setup",
+      "Hardware setup and testing",
+      "Cashier and manager training",
+      "Launch-day support",
+    ],
+    industries: ["retail-ecommerce", "wholesale-distribution", "oil-gas"],
+    related: ["inventory-warehouse-management", "erp-software", "website-development", "crm-software"],
+    faqs: [
+      {
+        question: "Does the POS work without internet?",
+        answer: "Yes. Offline mode lets cashiers keep selling; transactions sync automatically when the connection returns.",
+      },
+      {
+        question: "Can we manage multiple branches?",
+        answer: "Yes. Prices, products and promotions are managed centrally while each branch keeps its own stock, cash and reports.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "custom-software-development",
+    name: "Custom Software Development",
+    short: "Custom Software",
+    category: "engineering",
+    icon: "Code2",
+    metaTitle: "Custom Software Development Company",
+    metaDescription:
+      "Custom software development for businesses that have outgrown spreadsheets and off-the-shelf tools. Portals, SaaS, workflow systems and modernisation.",
+    keywords: ["custom software development", "bespoke software", "software development company", "business software development", "legacy system modernization"],
+    eyebrow: "Custom software development",
+    h1: "Custom software built around the way your business works",
+    intro:
+      "When off-the-shelf tools don't fit, we design and build software that does — from internal workflow systems and customer portals to complete SaaS products. You get maintainable code, clear documentation and full ownership.",
+    image: "/images/custom-software.svg",
+    imageAlt: "Code editor next to an architecture diagram connecting web app, API, database and mobile app",
+    pains: [
+      "Your team works around software instead of with it",
+      "Critical processes run on fragile spreadsheets",
+      "Your legacy system is slow, insecure and hard to change",
+      "You pay for five SaaS tools that don't talk to each other",
+      "You have a product idea but no technical team",
+    ],
+    outcomes: [
+      { title: "A perfect fit", body: "Software shaped to your process, not a compromise." },
+      { title: "You own it", body: "Source code, data and documentation belong to you." },
+      { title: "Room to grow", body: "Scalable architecture that handles more users, data and features." },
+      { title: "Competitive edge", body: "Automate what competitors still do by hand." },
+    ],
+    featuresTitle: "What we build",
+    features: [
+      { title: "Workflow & approval systems", body: "Requests, approvals, tasks and audit trails for any internal process." },
+      { title: "Customer & supplier portals", body: "Self-service ordering, tracking, documents and support." },
+      { title: "SaaS products", body: "Multi-tenant platforms with subscriptions, billing and admin tools." },
+      { title: "Marketplaces & booking", body: "Multi-vendor platforms, scheduling and reservations." },
+      { title: "Legacy modernisation", body: "Rebuild or migrate old desktop systems to modern cloud apps." },
+      { title: "AI-powered features", body: "Document processing, smart search, forecasting and assistants where they add real value." },
+    ],
+    spotlight: {
+      title: "A delivery process you can see",
+      body: "You get a dedicated project lead, a clickable prototype before development, working demos every two weeks and a staging environment to test on — so you always know where the project stands.",
+      points: [
+        "Fixed-scope or dedicated-team engagement",
+        "Modern stack: TypeScript, React, Next.js, Node.js, .NET, Python, PostgreSQL",
+        "Automated testing, code review and secure deployment",
+        "Documentation and handover to your team if needed",
+      ],
+      image: "/images/consultation-meeting.svg",
+      imageAlt: "Discovery workshop with a team mapping a process flow on a whiteboard",
+    },
+    deliverables: [
+      "Discovery, requirements and clickable prototype",
+      "UI/UX design system",
+      "Tested, documented source code",
+      "Cloud deployment and monitoring",
+      "Maintenance and feature roadmap",
+    ],
+    industries: ["oil-gas", "manufacturing", "construction-real-estate", "field-professional-services", "warehousing-logistics"],
+    related: ["web-application-development", "mobile-app-development", "api-integration-automation", "erp-software"],
+    faqs: [
+      {
+        question: "Who owns the source code?",
+        answer: "You do. On final payment, full intellectual-property rights, source code and documentation are transferred to you.",
+      },
+      {
+        question: "Can you take over an existing project?",
+        answer:
+          "Yes. We start with a code and architecture review, fix critical issues first and then continue development or plan a phased modernisation.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "web-application-development",
+    name: "Web Application Development",
+    short: "Web Applications",
+    category: "engineering",
+    icon: "AppWindow",
+    metaTitle: "Web Application Development Services",
+    metaDescription:
+      "Secure, fast and scalable web application development: business portals, dashboards, SaaS platforms and cloud apps built with modern technology.",
+    keywords: ["web application development", "web app development company", "SaaS development", "cloud application development", "progressive web app"],
+    eyebrow: "Web applications",
+    h1: "Web applications that are fast, secure and easy to use",
+    intro:
+      "From internal tools to customer-facing platforms, we build cloud web applications that work on any device, scale with demand and are a pleasure to use.",
+    image: "/images/data-center.svg",
+    imageAlt: "Cloud infrastructure with server racks, databases and a security shield",
+    pains: [
+      "Your current app is slow and users complain",
+      "Security and data-protection concerns keep you up at night",
+      "The app breaks every time you add a feature",
+      "It doesn't work properly on mobile",
+    ],
+    outcomes: [
+      { title: "Any device", body: "Responsive interfaces that work on desktop, tablet and phone." },
+      { title: "Secure by design", body: "Role-based access, encryption, backups and security testing." },
+      { title: "Built to scale", body: "Cloud architecture that grows with your users." },
+      { title: "Easy to change", body: "Clean, tested code so new features ship quickly." },
+    ],
+    featuresTitle: "Web apps we deliver",
+    features: [
+      { title: "Business portals", body: "Customer, dealer, vendor and employee portals." },
+      { title: "SaaS platforms", body: "Multi-tenant apps with subscription billing." },
+      { title: "Admin dashboards", body: "Operational control panels with real-time data." },
+      { title: "Progressive web apps", body: "Installable, offline-capable apps without app stores." },
+      { title: "Booking & scheduling", body: "Appointments, resources and availability management." },
+      { title: "Document & workflow apps", body: "Forms, approvals, e-signatures and archives." },
+    ],
+    spotlight: {
+      title: "Engineering quality you can rely on",
+      body: "We design the architecture, interface and infrastructure together, so the app is fast, reliable and affordable to run.",
+      points: [
+        "UX research and prototyping before code",
+        "Automated tests and continuous deployment",
+        "Hosting on AWS, Azure, Google Cloud or your servers",
+        "Performance and uptime monitoring",
+      ],
+      image: "/images/custom-software.svg",
+      imageAlt: "Web application architecture with API and database connections",
+    },
+    deliverables: ["UX prototype", "Production-ready web app", "Cloud hosting setup", "Admin training", "Support plan"],
+    industries: ["field-professional-services", "education-training", "construction-real-estate", "warehousing-logistics"],
+    related: ["custom-software-development", "mobile-app-development", "api-integration-automation", "business-intelligence-dashboards"],
+    faqs: [
+      {
+        question: "What technology do you use?",
+        answer:
+          "Usually TypeScript with React/Next.js on the front end and Node.js, .NET or Python on the back end, with PostgreSQL or SQL Server. We choose the stack that best fits your team and requirements.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "mobile-app-development",
+    name: "Mobile App Development",
+    short: "Mobile Apps",
+    category: "engineering",
+    icon: "Smartphone",
+    metaTitle: "Mobile App Development — Android & iOS Apps",
+    metaDescription:
+      "Android and iOS app development for customers, field teams and staff. Ordering, delivery, field service and loyalty apps connected to your systems.",
+    keywords: ["mobile app development", "Android app development", "iOS app development", "Flutter app development", "React Native development"],
+    eyebrow: "Android & iOS apps",
+    h1: "Mobile apps your customers and field teams rely on every day",
+    intro:
+      "We design and build Android and iOS apps — for customers ordering and booking, for sales reps and drivers in the field, and for staff who need your systems in their pocket.",
+    image: "/images/mobile-apps.svg",
+    imageAlt: "Three smartphones showing an orders screen, a delivery tracking map and a user profile",
+    pains: [
+      "Field staff report on paper and data arrives days later",
+      "Customers expect to order and track on their phones",
+      "Your current app has poor reviews and crashes",
+      "Building separate Android and iOS apps seems too expensive",
+    ],
+    outcomes: [
+      { title: "Real-time field data", body: "Visits, orders, photos and signatures captured on the spot." },
+      { title: "More repeat sales", body: "Easy re-ordering, push notifications and loyalty rewards." },
+      { title: "One codebase", body: "Cross-platform development for Android and iOS lowers cost." },
+      { title: "Store-ready", body: "We handle builds, listings and release management." },
+    ],
+    featuresTitle: "Apps we build",
+    features: [
+      { title: "Customer ordering apps", body: "Catalogue, cart, payments and order tracking." },
+      { title: "Field sales & service apps", body: "Visits, orders, inspections and job sheets — even offline." },
+      { title: "Delivery & driver apps", body: "Routes, proof of delivery, GPS tracking and cash collection." },
+      { title: "Warehouse scanner apps", body: "Barcode receiving, picking and counting on Android devices." },
+      { title: "Learning apps", body: "Courses, videos and quizzes on mobile." },
+      { title: "Employee self-service", body: "Attendance, leave, payslips and approvals." },
+    ],
+    spotlight: {
+      title: "Connected to the systems you already run",
+      body: "Your app is only as useful as the data behind it. We connect mobile apps to your ERP, CRM, inventory and payment systems through secure APIs.",
+      points: [
+        "Flutter or React Native for cross-platform; native when needed",
+        "Offline-first design for poor connectivity",
+        "Push notifications, maps, camera and barcode scanning",
+        "Crash monitoring and analytics after launch",
+      ],
+      image: "/images/field-services.svg",
+      imageAlt: "Field technician beside a service van using a tablet with a job schedule",
+    },
+    deliverables: ["UX design and prototype", "Android & iOS apps", "Admin panel and APIs", "App store submission", "Post-launch support"],
+    industries: ["field-professional-services", "wholesale-distribution", "retail-ecommerce", "warehousing-logistics", "oil-gas"],
+    related: ["web-application-development", "custom-software-development", "api-integration-automation", "crm-software"],
+    faqs: [
+      {
+        question: "Do you publish the app to Google Play and the App Store?",
+        answer:
+          "Yes. We prepare store listings, builds and privacy information and manage the submission. Final approval is decided by Apple and Google, and we handle any review feedback.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "api-integration-automation",
+    name: "API Integration & Automation",
+    short: "Integrations & Automation",
+    category: "engineering",
+    icon: "Workflow",
+    metaTitle: "API Integration & Business Process Automation",
+    metaDescription:
+      "Connect your ERP, CRM, e-commerce, accounting, payment and messaging systems. API integration and workflow automation that removes manual data entry.",
+    keywords: ["API integration services", "system integration", "business process automation", "workflow automation", "ERP integration"],
+    eyebrow: "Integration & automation",
+    h1: "Connect your systems and automate the repetitive work",
+    intro:
+      "Your apps should share data automatically. We integrate ERP, CRM, e-commerce, accounting, payments, shipping and messaging so information flows without copy-paste — and failures are caught before they become problems.",
+    image: "/images/integrations.svg",
+    imageAlt: "Integration hub connecting ERP, CRM, e-commerce, payments, accounting, messaging and warehouse systems",
+    pains: [
+      "Staff re-type orders from one system into another",
+      "Data is out of date by the time it reaches reports",
+      "An integration failed silently and nobody noticed for a week",
+      "Every new tool adds another manual export",
+    ],
+    outcomes: [
+      { title: "Zero double entry", body: "Data entered once flows everywhere it's needed." },
+      { title: "Hours saved weekly", body: "Automations take over repetitive admin tasks." },
+      { title: "Fewer errors", body: "Validation and mapping rules stop bad data spreading." },
+      { title: "Visible failures", body: "Monitoring and alerts with automatic retries." },
+    ],
+    featuresTitle: "Integrations we commonly build",
+    features: [
+      { title: "E-commerce ↔ ERP", body: "Orders, stock, prices and customers synced with your store." },
+      { title: "Accounting sync", body: "Invoices, payments and journals posted automatically." },
+      { title: "Payment gateways", body: "Online payments, refunds and reconciliation." },
+      { title: "Shipping & couriers", body: "Labels, tracking numbers and delivery status." },
+      { title: "Messaging", body: "WhatsApp, SMS and email notifications triggered by events." },
+      { title: "Government & tax portals", body: "E-invoicing and statutory reporting where APIs are available." },
+    ],
+    spotlight: {
+      title: "Reliable by design",
+      body: "We document which system owns each record, map every field and build monitoring, retries and alerting into every integration.",
+      points: [
+        "REST, GraphQL, webhooks, SFTP and database connectors",
+        "Secure credential storage",
+        "Integration dashboards with error queues",
+        "Clear documentation for your team",
+      ],
+      image: "/images/data-center.svg",
+      imageAlt: "Secure cloud infrastructure with databases and servers",
+    },
+    deliverables: ["Integration map and data contract", "Built and tested integrations", "Monitoring and alerts", "Documentation", "Support"],
+    industries: ["retail-ecommerce", "wholesale-distribution", "warehousing-logistics", "manufacturing"],
+    related: ["erp-software", "custom-software-development", "business-intelligence-dashboards", "crm-software"],
+    faqs: [
+      {
+        question: "Can you integrate a system that has no API?",
+        answer:
+          "Often yes — through database connectors, file exchange (CSV/SFTP) or controlled automation. We assess the safest option during discovery.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "business-intelligence-dashboards",
+    name: "Business Intelligence & Dashboards",
+    short: "BI & Dashboards",
+    category: "engineering",
+    icon: "BarChart3",
+    metaTitle: "Business Intelligence & Reporting Dashboards",
+    metaDescription:
+      "Business intelligence dashboards that turn ERP, CRM, sales and operations data into clear KPIs and reports. Real-time insight for every manager.",
+    keywords: ["business intelligence dashboards", "BI reporting", "KPI dashboard", "Power BI development", "data analytics services"],
+    eyebrow: "Business intelligence",
+    h1: "Dashboards that show what's happening — and what to do next",
+    intro:
+      "Bring your sales, finance, inventory and operations data together into dashboards your managers will actually open. Clear KPIs, drill-downs to the source and automatic reports in your inbox.",
+    image: "/images/analytics-reporting.svg",
+    imageAlt: "Business intelligence report wall with KPIs, charts and a regional map",
+    pains: [
+      "Reports take days to prepare in Excel",
+      "Different managers quote different numbers",
+      "You find out about problems after the month ends",
+      "Data is locked inside different systems",
+    ],
+    outcomes: [
+      { title: "Real-time KPIs", body: "Live numbers instead of last month's spreadsheet." },
+      { title: "One definition", body: "Agreed KPI definitions so everyone trusts the numbers." },
+      { title: "Early warnings", body: "Alerts when a metric crosses a threshold." },
+      { title: "Hours saved", body: "Automated reports replace manual compilation." },
+    ],
+    featuresTitle: "What we deliver",
+    features: [
+      { title: "Executive dashboards", body: "Revenue, margin, cash and growth at a glance." },
+      { title: "Operations dashboards", body: "Orders, stock, production and delivery performance." },
+      { title: "Sales dashboards", body: "Pipeline, conversion, targets and team performance." },
+      { title: "Data warehouse", body: "A clean, central store combining all your sources." },
+      { title: "Power BI & custom dashboards", body: "Power BI, Looker Studio or embedded custom dashboards." },
+      { title: "Scheduled reports", body: "PDF and Excel reports delivered automatically." },
+    ],
+    spotlight: {
+      title: "From messy data to trusted insight",
+      body: "We connect your sources, clean and model the data, agree KPI definitions with you and design dashboards for each role.",
+      points: ["ERP, CRM, e-commerce and spreadsheet sources", "Role-based access", "Mobile-friendly dashboards", "Training for your analysts"],
+      image: "/images/team-collaboration.svg",
+      imageAlt: "Managers reviewing dashboards together in an office",
+    },
+    deliverables: ["KPI workshop", "Data pipeline and warehouse", "Role-based dashboards", "Automated reports", "Training"],
+    industries: ["oil-gas", "manufacturing", "retail-ecommerce", "wholesale-distribution"],
+    related: ["erp-software", "api-integration-automation", "crm-software", "custom-software-development"],
+    faqs: [
+      {
+        question: "Do we need Power BI?",
+        answer:
+          "Not necessarily. We work with Power BI and Looker Studio, or build dashboards directly into your own application when licensing or embedding needs make that the better choice.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+  {
+    slug: "seo-services",
+    name: "SEO Services",
+    short: "SEO Services",
+    category: "growth",
+    icon: "Search",
+    metaTitle: "SEO Services — Rank Higher & Get More Leads",
+    metaDescription:
+      "SEO services that grow organic traffic and leads: technical SEO, keyword research, on-page optimisation, content, local SEO and link building with monthly reporting.",
+    keywords: ["SEO services", "SEO agency", "technical SEO", "local SEO", "B2B SEO", "SEO for software companies"],
+    eyebrow: "Search engine optimisation",
+    h1: "SEO services that bring customers, not just traffic",
+    intro:
+      "Rank for the searches your buyers actually make. We combine technical SEO, keyword strategy, content and authority building to grow qualified organic leads — with transparent monthly reporting.",
+    image: "/images/seo-analytics.svg",
+    imageAlt: "SEO dashboard with rising organic traffic, keyword rankings table and page speed score",
+    pains: [
+      "Your competitors appear on Google and you don't",
+      "Your website gets traffic but no enquiries",
+      "You paid for SEO before and never saw results",
+      "Your site is slow and has technical errors",
+      "Ad costs keep rising and you want a long-term channel",
+    ],
+    outcomes: [
+      { title: "Higher rankings", body: "Visibility for high-intent keywords in your market." },
+      { title: "More qualified leads", body: "Traffic from people looking for what you sell." },
+      { title: "Lower acquisition cost", body: "Organic leads compound over time without paying per click." },
+      { title: "Full transparency", body: "Monthly reports on rankings, traffic, leads and work done." },
+    ],
+    featuresTitle: "What's included",
+    features: [
+      { title: "SEO audit", body: "Technical, content and competitor audit with a prioritised action plan." },
+      { title: "Keyword research", body: "Buyer-intent keywords mapped to pages and funnel stages." },
+      { title: "Technical SEO", body: "Speed, Core Web Vitals, indexing, structured data and site architecture." },
+      { title: "On-page optimisation", body: "Titles, headings, content, internal links and images." },
+      { title: "Content marketing", body: "Service pages, guides and blog content that rank and convert." },
+      { title: "Local SEO", body: "Google Business Profile, local citations and location pages." },
+      { title: "Link building", body: "Earned, relevant links from real industry publications — no spam." },
+      { title: "Reporting", body: "Monthly dashboard and a call to review results and next steps." },
+    ],
+    spotlight: {
+      title: "SEO run by people who also build websites",
+      body: "Because we're developers too, we fix technical issues ourselves instead of sending you a list. Strategy, content and code are handled by one team.",
+      points: [
+        "No long lock-in contracts",
+        "White-hat methods that follow Google's guidelines",
+        "Conversion tracking so SEO is measured in leads",
+        "SEO for English, Arabic and multi-language sites",
+      ],
+      image: "/images/team-collaboration.svg",
+      imageAlt: "Marketing team reviewing SEO performance dashboards",
+    },
+    deliverables: ["SEO audit and roadmap", "Keyword and content plan", "Technical fixes", "Monthly content and links", "Monthly performance report"],
+    industries: ["construction-real-estate", "education-training", "retail-ecommerce", "field-professional-services", "manufacturing"],
+    related: ["digital-marketing", "website-development", "crm-software", "business-intelligence-dashboards"],
+    faqs: [
+      {
+        question: "How long does SEO take to show results?",
+        answer:
+          "Technical fixes and quick wins can show movement within weeks, but meaningful ranking and lead growth usually builds over 3–6 months depending on your competition and starting point.",
+      },
+      {
+        question: "Do you guarantee first-page rankings?",
+        answer:
+          "No honest agency can guarantee rankings because search engines control them. We commit to clear deliverables, best-practice work and transparent reporting on rankings, traffic and leads.",
+      },
+      {
+        question: "How is SEO priced?",
+        answer: "SEO is a monthly retainer based on your goals, number of pages and competition. We'll recommend a plan after a free audit.",
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing",
+    name: "Digital Marketing",
+    short: "Digital Marketing",
+    category: "growth",
+    icon: "Megaphone",
+    metaTitle: "Digital Marketing Agency for B2B & Growing Businesses",
+    metaDescription:
+      "Digital marketing that generates leads: Google Ads, social media advertising, content, email marketing, landing pages and conversion tracking.",
+    keywords: ["digital marketing agency", "B2B digital marketing", "Google Ads management", "social media marketing", "lead generation"],
+    eyebrow: "Digital marketing",
+    h1: "Digital marketing that fills your pipeline with qualified leads",
+    intro:
+      "Paid search, social, content and email — planned around your sales goals and measured in leads and revenue, not likes. And because we also build your CRM, every lead is tracked from first click to closed deal.",
+    image: "/images/digital-marketing.svg",
+    imageAlt: "Marketing campaign dashboard with a lead funnel, channel performance and social and email campaign cards",
+    pains: [
+      "You spend on ads but can't tell what brings customers",
+      "Social media posts get likes but no enquiries",
+      "Leads from marketing aren't followed up by sales",
+      "You don't have time to run marketing consistently",
+    ],
+    outcomes: [
+      { title: "More qualified leads", body: "Campaigns targeted at decision-makers who buy." },
+      { title: "Lower cost per lead", body: "Continuous testing of audiences, creatives and landing pages." },
+      { title: "Closed-loop tracking", body: "Know which campaigns produce revenue, not just clicks." },
+      { title: "Consistent presence", body: "A content calendar that keeps your brand visible." },
+    ],
+    featuresTitle: "Our marketing services",
+    features: [
+      { title: "Google Ads (PPC)", body: "Search, display and remarketing campaigns focused on high-intent buyers." },
+      { title: "Social media advertising", body: "LinkedIn, Facebook and Instagram campaigns for lead generation." },
+      { title: "Social media management", body: "Content calendar, design and community management." },
+      { title: "Landing pages", body: "Fast, focused pages built to convert visitors into leads." },
+      { title: "Email & WhatsApp marketing", body: "Nurture sequences and campaigns to approved, opted-in contacts." },
+      { title: "Analytics & tracking", body: "GA4, tag management and CRM attribution set up correctly." },
+    ],
+    spotlight: {
+      title: "Marketing and sales on the same page",
+      body: "We connect your ads, landing pages and forms directly to your CRM, so sales can follow up immediately and you see the real return on every campaign.",
+      points: ["Monthly strategy and reporting calls", "Creative design and copywriting included", "Clear budgets with no hidden mark-ups", "Works alongside your in-house team"],
+      image: "/images/consultation-meeting.svg",
+      imageAlt: "Marketing strategy workshop around a whiteboard",
+    },
+    deliverables: ["Marketing strategy and channel plan", "Campaign setup and creative", "Landing pages and tracking", "Ongoing optimisation", "Monthly performance report"],
+    industries: ["education-training", "construction-real-estate", "retail-ecommerce", "field-professional-services"],
+    related: ["seo-services", "website-development", "crm-software", "business-intelligence-dashboards"],
+    faqs: [
+      {
+        question: "What budget do we need?",
+        answer:
+          "It depends on your market and goals. We recommend a test budget to learn what works, then scale the channels that produce leads at an acceptable cost. Ad spend is paid directly to the platforms.",
+      },
+      {
+        question: "Do you work with B2B companies?",
+        answer: "Yes. Much of our work is B2B — software, industrial, distribution, education and professional services.",
+      },
+    ],
+  },
+  {
+    slug: "website-development",
+    name: "Website & E-commerce Development",
+    short: "Websites & E-commerce",
+    category: "growth",
+    icon: "Globe",
+    metaTitle: "Website & E-commerce Development Services",
+    metaDescription:
+      "Fast, SEO-ready business websites and e-commerce stores that convert visitors into customers, connected to your CRM, inventory and payment systems.",
+    keywords: ["website development", "business website design", "e-commerce development", "Shopify development", "WooCommerce development"],
+    eyebrow: "Websites & e-commerce",
+    h1: "Websites and online stores built to win customers",
+    intro:
+      "Your website is your best salesperson. We design and build fast, SEO-ready company websites and e-commerce stores that explain what you do, build trust and turn visitors into enquiries and orders.",
+    image: "/images/web-development.svg",
+    imageAlt: "Responsive business website shown on a desktop browser, tablet and phone",
+    pains: [
+      "Your website looks outdated and doesn't reflect your company",
+      "It's slow, especially on mobile",
+      "Visitors leave without contacting you",
+      "Updating content requires a developer",
+      "Online orders don't connect to stock or accounting",
+    ],
+    outcomes: [
+      { title: "More enquiries", body: "Clear messaging, trust signals and calls to action on every page." },
+      { title: "Found on Google", body: "Built with technical SEO and fast loading from day one." },
+      { title: "Easy to update", body: "Edit pages, products and posts yourself." },
+      { title: "Connected selling", body: "Orders flow to your inventory, ERP and CRM automatically." },
+    ],
+    featuresTitle: "What we build",
+    features: [
+      { title: "Company websites", body: "Professional sites for B2B and service companies." },
+      { title: "E-commerce stores", body: "Shopify, WooCommerce or custom commerce." },
+      { title: "Landing pages", body: "Campaign pages designed to convert." },
+      { title: "Multi-language sites", body: "English, Arabic and other languages including right-to-left layouts." },
+      { title: "B2B ordering portals", body: "Customer-specific pricing, quick re-order and credit terms." },
+      { title: "Website care plans", body: "Hosting, updates, backups, security and small changes." },
+    ],
+    spotlight: {
+      title: "Design, content and SEO in one team",
+      body: "We write the messaging, design the pages, build the site and set up SEO and analytics — so you launch a website that performs, not just a pretty one.",
+      points: ["Mobile-first, accessible design", "Core Web Vitals optimised", "Analytics and conversion tracking", "Integrated with your CRM"],
+      image: "/images/seo-analytics.svg",
+      imageAlt: "Website performance dashboard with traffic and page speed",
+    },
+    deliverables: ["Sitemap and content plan", "Custom design", "Built website or store", "SEO and analytics setup", "Training and care plan"],
+    industries: ["retail-ecommerce", "construction-real-estate", "education-training", "field-professional-services", "manufacturing"],
+    related: ["seo-services", "digital-marketing", "inventory-warehouse-management", "api-integration-automation"],
+    faqs: [
+      {
+        question: "Can we update the website ourselves?",
+        answer: "Yes. We set up an easy content editor and train your team to update pages, products and articles.",
+      },
+      ...engagementFaqs,
+    ],
+  },
+];
+
+export const serviceBySlug: Record<string, Service> = Object.fromEntries(services.map((s) => [s.slug, s]));

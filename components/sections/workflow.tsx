@@ -1,1 +1,9 @@
-export function Workflow({steps,dark=false}:{steps:string[];dark?:boolean}){return <ol className={`workflow ${dark?"workflow-dark":""}`} style={{"--steps":steps.length} as React.CSSProperties}>{steps.map((step,index)=><li key={step}><span>{String(index+1).padStart(2,"0")}</span><strong>{step}</strong></li>)}</ol>}
+export function Workflow({ steps, dark = false }: { steps: string[]; dark?: boolean }) {
+  return (
+    <ol className={`workflow ${dark ? "is-dark" : ""}`}>
+      {steps.map((step, i) => (
+        <li key={step}><span>{String(i + 1).padStart(2, "0")}</span>{step}</li>
+      ))}
+    </ol>
+  );
+}
